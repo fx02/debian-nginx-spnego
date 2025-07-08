@@ -14,7 +14,7 @@ build-bullseye:
 	cd TARGET
 	git clone https://github.com/stnoonan/spnego-http-auth-nginx-module.git
 	apt-get update
-	apt-get -y install libkrb5-dev nginx-common
+	apt-get -y install libkrb5-dev nginx
 	apt-get -y source nginx
 	cd $$(ls -d nginx-1*) || exit 1
 	patch -p 1 < ../../nginx-spnego-deb-bullseye.patch
@@ -30,7 +30,7 @@ build-bookworm:
 	cd TARGET
 	git clone https://github.com/stnoonan/spnego-http-auth-nginx-module.git
 	apt-get update
-	apt-get -y install libkrb5-dev nginx-common
+	apt-get -y install libkrb5-dev nginx
 	cd spnego-http-auth-nginx-module
 	ls ../../
 	cp -a ../../debian_bookworm debian

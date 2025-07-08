@@ -5,6 +5,11 @@ ARG DEBIAN_VERSION
 
 # Add the appropriate source list for the given Debian version
 RUN rm -f /etc/apt/sources.list.d/*
+
+COPY ./nginx-repo-conf/nginx-archive-keyring.gpg /usr/share/keyrings/nginx-archive-keyring.gpg
+COPY ./nginx-repo-conf/nginx.list /etc/apt/sources.list.d/nginx.list
+COPY ./nginx-repo-conf/99nginx /etc/apt/preferences.d/99nginx
+
 RUN echo "deb http://deb.debian.org/debian ${DEBIAN_VERSION} main" >> /etc/apt/sources.list.d/main-src.list
 RUN echo "deb http://deb.debian.org/debian ${DEBIAN_VERSION}-updates main" >> /etc/apt/sources.list.d/main-src.list
 RUN echo "deb http://deb.debian.org/debian-security ${DEBIAN_VERSION}-security main" >> /etc/apt/sources.list.d/main-src.list
@@ -13,9 +18,10 @@ RUN echo "deb-src http://deb.debian.org/debian ${DEBIAN_VERSION}-updates main" >
 RUN echo "deb-src http://deb.debian.org/debian-security ${DEBIAN_VERSION}-security main" >> /etc/apt/sources.list.d/main-src.list
 RUN apt-get -qy update
 RUN apt-get -qy install git build-essential debhelper-compat dpkg-dev po-debconf debhelper-compat perl
-
+#
+RUN 
 # Cache some nginx build-deps
-RUN apt-get -qy install nginx-common comerr-dev libkrb5-dev libhiredis-dev libluajit-5.1-dev libmaxminddb-dev libmhash-dev libpam0g-dev libperl-dev quilt libssl-dev libgd-dev libgeoip-dev libpcre3-dev libgeoip-dev libxslt1-dev
+RUN apt-get -qy install nginx comerr-dev libkrb5-dev libhiredis-dev libluajit-5.1-dev libmaxminddb-dev libmhash-dev libpam0g-dev libperl-dev quilt libssl-dev libgd-dev libgeoip-dev libpcre3-dev libgeoip-dev libxslt1-dev
 
 WORKDIR /root
 RUN mkdir TARGET

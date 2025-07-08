@@ -7,7 +7,7 @@ DEBIAN_VERSIONS=("bookworm" "bullseye")
 for ARCH in "${ARCHS[@]}"; do
     for VERSION in "${DEBIAN_VERSIONS[@]}"; do
     IMG="build-spnego-nginx-deb:${VERSION}-${ARCH}"
-        docker build --build-arg DEBIAN_VERSION=${VERSION} --platform linux/${ARCH} -t $IMG .
+        docker buildx build --build-arg DEBIAN_VERSION=${VERSION} --platform linux/${ARCH} -t $IMG .
         docker run --rm -iv${PWD}:/root/OUTPUT $IMG sh -s << EOF
             cd /root
             rm -rf TARGET
